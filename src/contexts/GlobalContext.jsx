@@ -5,6 +5,7 @@ import axios from "axios";
 const GlobalContext = createContext();
 
 const urlCurr = "https://api.frankfurter.dev/v1/currencies";
+const urlConvert = "https://api.frankfurter.dev/v1/latest";
 
 const GlobalProvider = ({ children }) => {
 
@@ -20,9 +21,27 @@ const GlobalProvider = ({ children }) => {
             .catch(err => console.error(err))
     }, []);
 
+
+
+    // conversione
+    const [firstValue, setFirstValue] = useState(1);
+    const [firstCurrency, setFirstCurrency] = useState("Euro");
+    const [secondValue, setSecondValue] = useState(1);
+    const [secondCurrency, setSecondCurrency] = useState("United States Dollar");
+
+
+
     // destructuring
     const value = {
-        currencies
+        currencies,
+        firstValue,
+        setFirstValue,
+        firstCurrency,
+        setFirstCurrency,
+        secondValue,
+        setSecondValue,
+        secondCurrency,
+        setSecondCurrency
     };
 
     return (

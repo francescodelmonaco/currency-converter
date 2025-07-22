@@ -1,24 +1,26 @@
 import { memo } from "react";
 
-function Currency({ curr, defaultValue }) {
+function Currency({ currencies, value, changeValue, curr, changeCurr }) {
     return (
         <div className="flex gap-3 justify-between items-center">
             <input
+                className="border rounded p-1.5"
                 type="number"
                 name="number"
                 min={0}
-                defaultValue={1}
-                className="border rounded p-1.5"
+                value={value}
+                onChange={e => changeValue(e.target.value)}
             />
 
             <select
-                name="currency"
                 className="border rounded p-1.5"
-                defaultValue={defaultValue}
+                name="currency"
+                value={curr}
+                onChange={e => changeCurr(e.target.value)}
             >
                 {
                     // estraggo i valori dall'oggetto e li mappo
-                    Object.values(curr).map((c, id) => (
+                    Object.values(currencies).map((c, id) => (
                         <option key={id} value={c} >{c}</option>
                     ))
                 }
