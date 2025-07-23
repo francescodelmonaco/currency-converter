@@ -8,6 +8,7 @@ function Currency({ currencies, value, changeValue, curr, changeCurr }) {
                 type="number"
                 name="number"
                 min={0}
+                step={0.01}
                 value={value}
                 onChange={e => changeValue(e.target.value)}
             />
@@ -20,7 +21,7 @@ function Currency({ currencies, value, changeValue, curr, changeCurr }) {
             >
                 {
                     // estraggo i valori dall'oggetto e li mappo
-                    Object.values(currencies).map((c, id) => (
+                    Object.keys(currencies).map((c, id) => (
                         <option key={id} value={c} >{c}</option>
                     ))
                 }

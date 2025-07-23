@@ -25,9 +25,27 @@ const GlobalProvider = ({ children }) => {
 
     // conversione
     const [firstValue, setFirstValue] = useState(1);
-    const [firstCurrency, setFirstCurrency] = useState("Euro");
+    const [firstCurrency, setFirstCurrency] = useState("EUR");
     const [secondValue, setSecondValue] = useState(1);
-    const [secondCurrency, setSecondCurrency] = useState("United States Dollar");
+    const [secondCurrency, setSecondCurrency] = useState("USD");
+
+    const converter = (from, to, amount) => {
+        axios.get(`${urlConvert}?base=${from}&symbols=${to}`)
+            .then(res => {
+                const objConverted = res.data; // oggetto con info cambio tra le due valute "from" - "to"
+                const rate = objConverted.rates[to]; // estraggo dall'oggetto il tasso di cambio
+                console.log(`Tasso di cambio ${from} - ${to}: ${rate}`);
+
+                const valueConverted = (amount * rate).toFixed(2); // valore "firstValue" convertito
+                console.log(`Valore convertito: ${valueConverted}`);
+                setSecondValue(valueConverted); // aggiorno il secondo valore con quello convertito
+            })
+            .catch(err => console.error(err))
+    };
+
+    useEffect(() => {
+        converter(firstCurrency, secondCurrency, firstValue);
+    }, [firstValue, firstCurrency, secondCurrency]);
 
 
 
