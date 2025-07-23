@@ -13,7 +13,8 @@ export default function HomePage() {
         secondValue,
         setSecondValue,
         secondCurrency,
-        setSecondCurrency
+        setSecondCurrency,
+        switcher
     } = useGlobalContext();
 
     return (
@@ -29,7 +30,12 @@ export default function HomePage() {
                     changeValue={setFirstValue}
                 />
 
-                <i className="fa-solid fa-arrow-right-arrow-left"></i>
+                <button
+                    className="cursor-pointer"
+                    onClick={switcher}
+                >
+                    <i className="fa-solid fa-arrow-right-arrow-left"></i>
+                </button>
 
                 <Currency
                     currencies={currencies}

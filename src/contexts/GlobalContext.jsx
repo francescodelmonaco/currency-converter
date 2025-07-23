@@ -30,7 +30,7 @@ const GlobalProvider = ({ children }) => {
     const [secondCurrency, setSecondCurrency] = useState("USD");
 
     const converter = (from, to, amount) => {
-        axios.get(`${urlConvert}?base=${from}&symbols=${to}`)
+        axios.get(`${urlConvert}?&base=${from}&symbols=${to}`)
             .then(res => {
                 const objConverted = res.data; // oggetto con info cambio tra le due valute "from" - "to"
                 const rate = objConverted.rates[to]; // estraggo dall'oggetto il tasso di cambio
@@ -49,6 +49,16 @@ const GlobalProvider = ({ children }) => {
 
 
 
+    // switch button
+    function switcher() {
+        setFirstValue(secondValue);
+        setFirstCurrency(secondCurrency);
+        setSecondValue(firstValue);
+        setSecondCurrency(firstCurrency);
+    };
+
+
+
     // destructuring
     const value = {
         currencies,
@@ -59,7 +69,8 @@ const GlobalProvider = ({ children }) => {
         secondValue,
         setSecondValue,
         secondCurrency,
-        setSecondCurrency
+        setSecondCurrency,
+        switcher
     };
 
     return (
