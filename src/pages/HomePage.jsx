@@ -18,10 +18,10 @@ export default function HomePage() {
     } = useGlobalContext();
 
     return (
-        <>
-            <h1 className="text-center font-bold text-2xl py-3">Currency Converter</h1>
+        <main>
+            <h1 className="text-center font-bold text-2xl py-10">Currency Converter</h1>
 
-            <div className="flex flex-col gap-3 justify-between items-center">
+            <div className="shadow flex flex-col gap-7 justify-between items-center p-6 border border-gray-100 bg-gray-100 rounded-2xl w-150 mx-auto">
                 <Currency
                     currencies={currencies}
                     curr={firstCurrency}
@@ -31,7 +31,7 @@ export default function HomePage() {
                 />
 
                 <button
-                    className="cursor-pointer"
+                    className="cursor-pointer text-2xl"
                     onClick={switcher}
                 >
                     <i className="fa-solid fa-arrow-right-arrow-left"></i>
@@ -45,6 +45,6 @@ export default function HomePage() {
                     changeValue={setSecondValue}
                 />
             </div>
-        </>
+        </main>
     )
 }

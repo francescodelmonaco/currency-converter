@@ -4,7 +4,7 @@ function Currency({ currencies, value, changeValue, curr, changeCurr }) {
     return (
         <div className="flex gap-3 justify-between items-center">
             <input
-                className="border rounded p-1.5"
+                className="shadow rounded p-3 bg-white border border-gray-200"
                 type="number"
                 name="number"
                 min={0}
@@ -14,15 +14,15 @@ function Currency({ currencies, value, changeValue, curr, changeCurr }) {
             />
 
             <select
-                className="border rounded p-1.5"
+                className="shadow rounded p-3 bg-gray-300 border border-gray-300"
                 name="currency"
                 value={curr}
                 onChange={e => changeCurr(e.target.value)}
             >
                 {
                     // estraggo i valori dall'oggetto e li mappo
-                    Object.keys(currencies).map((c, id) => (
-                        <option key={id} value={c} >{c}</option>
+                    Object.entries(currencies).map(([code, name]) => (
+                        <option key={code} value={code} >{code} - {name}</option>
                     ))
                 }
             </select>
