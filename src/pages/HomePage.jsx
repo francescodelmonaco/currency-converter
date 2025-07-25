@@ -28,6 +28,7 @@ export default function HomePage() {
                     changeCurr={setFirstCurrency}
                     value={firstValue}
                     changeValue={setFirstValue}
+                    otherCurr={secondCurrency}
                 />
 
                 <button
@@ -43,6 +44,7 @@ export default function HomePage() {
                     changeCurr={setSecondCurrency}
                     value={secondValue}
                     changeValue={setSecondValue}
+                    otherCurr={firstCurrency}
                 />
             </div>
         </main>

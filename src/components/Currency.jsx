@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-function Currency({ currencies, value, changeValue, curr, changeCurr }) {
+function Currency({ currencies, value, changeValue, curr, changeCurr, otherCurr }) {
     return (
         <div className="flex gap-3 justify-between items-center">
             <input
@@ -22,7 +22,13 @@ function Currency({ currencies, value, changeValue, curr, changeCurr }) {
                 {
                     // estraggo i valori dall'oggetto e li mappo
                     Object.entries(currencies).map(([code, name]) => (
-                        <option key={code} value={code} >{code} - {name}</option>
+                        <option
+                            key={code}
+                            value={code}
+                            disabled={code === otherCurr}
+                        >
+                            {code} - {name}
+                        </option>
                     ))
                 }
             </select>
