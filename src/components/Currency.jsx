@@ -20,7 +20,7 @@ function Currency({ currencies, value, changeValue, curr, changeCurr, otherCurr 
                 onChange={e => changeCurr(e.target.value)}
             >
                 {
-                    // estraggo i valori dall'oggetto e li mappo
+                    // estraggo array chiave + valore dall'oggetto e li mappo
                     Object.entries(currencies).map(([code, name]) => (
                         <option
                             key={code}

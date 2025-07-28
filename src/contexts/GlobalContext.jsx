@@ -28,24 +28,54 @@ const GlobalProvider = ({ children }) => {
     const [firstCurrency, setFirstCurrency] = useState("EUR");
     const [secondValue, setSecondValue] = useState(1);
     const [secondCurrency, setSecondCurrency] = useState("USD");
+    const [lastChanged, setLastChanged] = useState("first"); // traccia quale input è stato modificato per ultimo
 
-    const converter = (from, to, amount) => {
-        axios.get(`${urlConvert}?&base=${from}&symbols=${to}`)
+    const converter = (from, to, amount, updateTarget) => {
+        axios.get(`${urlConvert}?base=${from}&symbols=${to}`)
             .then(res => {
-                const objConverted = res.data; // oggetto con info cambio tra le due valute "from" - "to"
-                const rate = objConverted.rates[to]; // estraggo dall'oggetto il tasso di cambio
-                console.log(`Tasso di cambio ${from} - ${to}: ${rate}`);
-
-                const valueConverted = (amount * rate).toFixed(2); // valore "firstValue" convertito
-                console.log(`Valore convertito: ${valueConverted}`);
-                setSecondValue(valueConverted); // aggiorno il secondo valore con quello convertito
+                const rate = res.data.rates[to];
+                const valueConverted = (amount * rate).toFixed(2);
+                console.log(`${amount} ${from} = ${valueConverted} ${to}`);
+                updateTarget(valueConverted);
             })
             .catch(err => console.error(err))
     };
 
+    // aggiorno il primo valore
+    const handleFirstValueChange = (value) => {
+        setFirstValue(value);
+        setLastChanged("first");
+    };
+
+    // aggiorno il secondo valore
+    const handleSecondValueChange = (value) => {
+        setSecondValue(value);
+        setLastChanged("second");
+    };
+
+    // gestione cambio valuta
+    const handleFirstCurrencyChange = (newCurrency) => {
+        setFirstCurrency(newCurrency);
+        setLastChanged("first");
+    };
+    const handleSecondCurrencyChange = (newCurrency) => {
+        setSecondCurrency(newCurrency);
+        setLastChanged("second");
+    };
+
+    // conversione da primo a secondo
     useEffect(() => {
-        converter(firstCurrency, secondCurrency, firstValue);
-    }, [firstValue, firstCurrency, secondCurrency]);
+        if (lastChanged === "first" && firstValue) {
+            converter(firstCurrency, secondCurrency, firstValue, setSecondValue);
+        }
+    }, [firstValue, firstCurrency, secondCurrency, lastChanged]);
+
+    // conversione da secondo a primo
+    useEffect(() => {
+        if (lastChanged === "second" && secondValue) {
+            converter(secondCurrency, firstCurrency, secondValue, setFirstValue);
+        }
+    }, [secondValue, firstCurrency, secondCurrency, lastChanged]);
 
 
 
@@ -63,13 +93,13 @@ const GlobalProvider = ({ children }) => {
     const value = {
         currencies,
         firstValue,
-        setFirstValue,
+        setFirstValue: handleFirstValueChange,
         firstCurrency,
-        setFirstCurrency,
+        setFirstCurrency: handleFirstCurrencyChange,
         secondValue,
-        setSecondValue,
+        setSecondValue: handleSecondValueChange,
         secondCurrency,
-        setSecondCurrency,
+        setSecondCurrency: handleSecondCurrencyChange,
         switcher
     };
 
